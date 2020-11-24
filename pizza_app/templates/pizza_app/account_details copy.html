@@ -1,0 +1,27 @@
+<h1>Completed Banks</h1>
+<a href="{% url 'pizza_app:index' %}">Home</a>
+<hr />
+<ul>
+  {% for bank in banks %}
+  <li>
+    <form action="." method="POST">
+      {% csrf_token %}
+      <input
+        type="checkbox"
+        name="status"
+        {%
+        if
+        bank.status
+        %}checked{%
+        endif
+        %}
+      />
+      <input type="submit" value="Update" />
+      {{ bank.text }}
+      <input type="hidden" name="pk" value="{{bank.pk}}" />
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+<hr />
+{% endblock %}

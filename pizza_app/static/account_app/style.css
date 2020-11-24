@@ -1,0 +1,171 @@
+body {
+  font-size: 0.875rem;
+  background-color: #f8f8f8;
+  margin-left: 220px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+h1 {
+  color: #8daa72;
+  font-family: "Times New Roman", Times, serif;
+}
+
+div.hello_username {
+  position: absolute;
+  color: #8daa72;
+  height: 50px;
+  bottom: 10px;
+  padding: 6px 8px 6px 16px;
+}
+
+.topnav {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+  background-color: #333333;
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px 8px 10px #888888;
+}
+
+.topnav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.account {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 20px;
+  width: 45%;
+  float: left;
+}
+
+.transfer_accounts,
+.transaction-table {
+  float: right;
+  padding: 20px;
+  border-radius: 20px;
+  width: 45%;
+  top: 0;
+  background-color: #ffffff;
+  border-radius: 5px;
+  /* overflow: hidden; */
+}
+
+.transfer_text,
+.transactions-text {
+  float: right;
+  width: 50%;
+  top: 0;
+}
+
+.accounts_text {
+  float: left;
+  width: 50%;
+  top: 0;
+}
+.pink-btn {
+  background-color: #ea9fa4 !important;
+  border-radius: 20px;
+  margin-top: 20px;
+  width: 30%;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.account a,
+.view_account,
+.account-details a {
+  font-size: 1em;
+  color: #8daa72;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: transparent;
+  border: none;
+}
+
+.new_account_container {
+  background-color: #f8f8f8;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 5px;
+}
+
+.new_account {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+h2 {
+  color: #8daa72;
+}
+
+input[type="text"],
+[type="number"] {
+  width: 90%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  resize: vertical;
+}
+
+.pink-btn a {
+  color: #ffffff;
+}
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  resize: vertical;
+  color: grey;
+}
+
+.tranfer1 {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.account-list {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.account-details {
+  float: left;
+  padding: 20px;
+  border-radius: 20px;
+  width: 45%;
+  top: 0;
+  background-color: #ffffff;
+  border-radius: 5px;
+}

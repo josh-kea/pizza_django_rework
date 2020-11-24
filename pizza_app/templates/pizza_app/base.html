@@ -7,13 +7,14 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{% static 'login_app/style.css' %}"
+      href="{% static 'pizza_app/style.css' %}"
       media="screen"
     />
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
     <nav class="topnav"> 
+      <br />
       {% if user.is_authenticated and user.is_staff %}
       <a class="btn" href="{% url 'pizza_app:index' %}">Home</a>
       {% else %}
@@ -26,12 +27,13 @@
             {% else %}
             <a class="nav-link2" href="{% url 'login_app:login' %}">Log in <span data-feather="log-in"></a>
             {% endif %}
+          </li>
+        </ul>
+        <div class="hello_username">Hi, {{ user.username }}. </div>
       </nav>
   
     {% block content %} {% endblock %} {% block footer %} {% endblock %}
   </body>
 </html>
-
-
 
 

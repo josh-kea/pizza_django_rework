@@ -15,7 +15,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user:
             dj_login(request, user)
-            return HttpResponseRedirect(reverse('account_app:index'))
+            return HttpResponseRedirect(reverse('pizza_app:index'))
         else:
             context = {'error': 'Bad username or password.'}
     return render(request, 'login_app/login.html', context)
