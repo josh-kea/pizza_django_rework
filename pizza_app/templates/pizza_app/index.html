@@ -1,0 +1,31 @@
+{% extends 'pizza_app/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<section class="user_page">
+    <div class="menu_container">
+        <h1>Menu</h1>
+
+        <a href="{% url 'login_app:user_profile' %}">View Profile Details</a>
+
+        {% for userProfile in userProfiles %}
+        <h2>Helloooooo {{ user.username }}. {{ userProfile.user_status }}</h2>
+        {% endfor%}
+
+
+        {% for pizza in pizzas %}
+        <h2>Pizza name: {{ pizza.name }} <br> Pizza Description: {{ pizza.text }} <br> Price: {{ pizza.price }} kr.</h2>
+        {% endfor %}
+    </div>
+
+    <div class="img_container">
+
+    </div>
+</section>
+
+
+</body>
+
+</html>
+{% endblock %}

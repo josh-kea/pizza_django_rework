@@ -1,7 +1,7 @@
 body {
   background-color: #f8f8f8;
   margin: 0;
-  overflow: hidden;
+  
 }
 h1 {
   color: #fff;
@@ -18,7 +18,6 @@ h1 {
   padding-top: 20px;
   text-decoration: none;
   font-size: 17px;
-  overflow: hidden;
   box-shadow: 10px 10px 5px #000;
 }
 
@@ -48,34 +47,32 @@ h1 {
   color: white;
 }
 
-.login,
-.signup,
-.password {
+.employe_page{
   background-image: url("/static/login_app/img/background.jpg");
   background-size: cover;
   padding-top: 20px;
   width: 100%;
-  height: 1000px;
+  height: 1200px;
   background-repeat: no-repeat;
-}
-
-.signup_container{
-  padding-top: 140px;
   text-align: center;
 }
 
-.signup_container input[type="text"],
-.signup_container [type="password"],
-.signup_container [type="email"],
-.signup_container [type="phone"],
-.signup_container select,
-.signup_container textarea {
-  width: 50%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-top: 10px;
-  resize: vertical;
+.user_page{
+  background-image: url("/static/login_app/img/background.jpg");
+  background-size: cover;
+  padding-top: 20px;
+  width: 100%;
+  height: 1200px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.menu_container{
+  padding-top: 30px;
+  float: left;
+  width: 35%;
+  padding-left: 30px;
+ 
 }
 
 .img_container{
@@ -84,26 +81,24 @@ h1 {
   float: right;
   width: 59%;
   height: 100%;
+  padding-top: 30px;
   background-repeat: no-repeat;
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
 
-.login_container{
-  padding-top: 30px;
-  float: left;
-  width: 35%;
-  padding-left: 30px;
+h2{
+  color: #fff;
 }
-
 
 input[type="text"],
 [type="password"],
 [type="email"],
 [type="phone"],
+[type="number"],
 select,
 textarea {
-  width: 80%;
+  width: 60%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -129,7 +124,7 @@ input[type="submit"] {
   background-color: #F9C54C !important;
   border-radius: 20px;
   margin-top: 20px;
-  width: 30%;
+  width: 20%;
   color: white;
   padding: 12px 20px;
   border: none;

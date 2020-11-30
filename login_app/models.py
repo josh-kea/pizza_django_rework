@@ -14,15 +14,14 @@ class PasswordResetRequest(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     telephone_number = models.IntegerField(default=12345678)
-    RANKS = (
-        ('Basic', 'Basic'),
-        ('Silver', 'Silver'),
-        ('Gold', 'Gold'),
+    status = (
+        ('employee', 'employee'),
+        ('user', 'user')
     )
-    user_rank = models.CharField(
-        choices=RANKS, default='Basic', max_length=250)
+    user_status = models.CharField(
+        choices=status, default='user', max_length=250)
 
     def __str__(self):
         return f'{self.user}'
