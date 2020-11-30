@@ -1,0 +1,28 @@
+{% extends 'pizza_app/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{%block content %}
+<div class="accounts_text">
+  <h1>Account details</h1>
+</div>
+<div class="transactions-text">
+  <h1>Transactions</h1>
+</div>
+
+<a href="{% url 'pizza_app:index' %}">Home</a>
+<hr />
+<ul>
+  {% for pizza in pizzas %}
+  Account Name: {{ pizza.name }}
+  Account price: {{ pizza.price }}
+  Your Balance {{ account.balance }}
+
+  {% endfor %}
+</ul>
+<p>HEJJJJJ</p>
+
+</body>
+
+</html>
+{% endblock %}

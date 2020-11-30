@@ -1,102 +1,31 @@
-{% extends 'pizza_app/base.html' %} {% block title %}Accounts{% endblock %}
+{% extends 'pizza_app/base.html' %}
+
+{% block title %}Login{% endblock %}
+
 {% block content %}
-<div class="accounts_text"><h1>Accounts</h1></div>
-<div class="transfer_text"><h1>Transfer Money</h1></div>
-<section class="account">
-<a href="{% url 'login_app:user_profile' %}">View Profile Details</a>
+<section class="user_page">
+    <div class="menu_container">
+        <h1>Menu</h1>
 
-{% for userProfile in userProfiles %}
-<div>
-  <p>Your current ranking is {{ userProfile.user_rank }}.<br>
-  {% if userProfile.user_rank == "Basic" %} Loan Status (BASIC): You cannot take a loan. 
-  {% elif userProfile.user_rank == "Silver" %} Loan Status (SILVER): You can take a loan of up to
-  $500.</p>
-   <button class="pink-btn"><a href="">Take A Loan</a> </button>
-  {% elif userProfile.user_rank == "Gold" %} Loan Status
-  (GOLD): You can take a loan of up to $1500. <a href="">Take A Loan</a>
-  {% endif %}
-</div>
-{% endfor %}
-<hr />
+        <a href="{% url 'login_app:user_profile' %}">View Profile Details</a>
 
-<!-- LIST ACCOUNTS -->
-
-<h2>Your Accounts</h2>
-
-  {% for account in accounts %}
-  
-    <form action="{% url 'pizza_app:account_details' %}" method="POST">
-      {% csrf_token %}
-      
-      <ul class="account-list">
-        Account Name:
-        {{ account.text }}<br>
-        Account number:
-        {{ account.number }} <br>
-        Your Balance
-        {{ account.balance }}<br><br>
-      
-    <input class="view_account "type="submit" value="View Account Details" />
-  </ul>
-      <input type="hidden" name="account_number" value="{{account.number}}" />
-    </form>
-    
-  {% endfor %}
-
-<hr />
+        {% for userProfile in userProfiles %}
+        <h2>Helloooooo {{ user.username }}. {{ userProfile.user_status }}</h2>
+        {% endfor%}
 
 
-<!-- CREATE NEW ACCOUNT -->
+        {% for pizza in pizzas %}
+        <h2>Pizza name: {{ pizza.name }} <br> Pizza Description: {{ pizza.text }} <br> Price: {{ pizza.price }} kr.</h2>
+        {% endfor %}
+    </div>
 
+    <div class="img_container">
 
-<div class="new_account_container">
-  <h2>Add new bank account</h2>
-  <div class="new_account">
-<form action="." method="POST">
-  {% csrf_token %}
-  
-  <input type="text" placeholder="Account Name" name="account_name" />
-  <input type="number" placeholder="Starting Balance" name="starting_balance" />
-  <input type="submit" value="Add" class="pink-btn"/>
-
-</form>
-</div>
-</div>
-
-{% if accounts %}
-</section>
-
-<section class="transfer_accounts">
-  <div class="tranfer1">
-    <h2>From</h2>
-<form action="{% url 'pizza_app:account_transfer' %}" method="POST" class="transfer-form">
-  {% csrf_token %}
-  <label for="transfer_from_account">
-    <select name="transfer_from_account">
-      {% for account in accounts %}
-        <option value="{{ account.number }}">Account Name: {{ account.text }} | Account Number:{{ account.number }} | Balance: {{ account.balance }}</option>
-      {% endfor %}
-    </select>
-  </label> 
-  <label for="transfer_to_account"><h2>To</h2>
-    <select name="transfer_to_account">
-      {% for account in accounts %}
-        <option value="{{ account.number }}"><b>Account Name: {{ account.text }} | Account Number:{{ account.number }} | Balance: {{ account.balance }}</option>
-      {% endfor %}
-    </select>
-  </label>
-  <br>
-
-    <label><h2>Amount</h2>
-    <input type="number" placeholder="Amount" name="transfer_amount" />
-    </label>
-    <input type="submit" value="Transfer" class="pink-btn" />
-  </div>
-
-</form>
+    </div>
 </section>
 
 
-{% endif %}
+</body>
 
+</html>
 {% endblock %}

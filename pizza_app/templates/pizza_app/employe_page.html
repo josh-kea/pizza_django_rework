@@ -1,0 +1,47 @@
+{% extends 'pizza_app/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+{% for userProfile in userProfiles %}
+{% if userProfile.user_status == "employee" %}
+
+<section class="employe_page">
+  <a href="{% url 'login_app:user_profile' %}">View Profile Details</a>
+
+  {% for userProfile in userProfiles %}
+  <h2>Helloooooo {{ user.username }}. {{ userProfile.user_status }}</h2>
+  {% endfor%}
+  <hr />
+
+  <!-- CREATE NEW PIZZA -->
+
+  <div class="new_pizza_container">
+    <h1>Add new Pizza</h1>
+    <form action="." method="POST">
+      {% csrf_token %}
+      <input type="text" placeholder="Name" name="pizza_name" />
+      <input type="text" placeholder="Text" name="pizza_text" />
+      <input type="number" placeholder="Price" name="pizza_price" />
+      <br>
+      <input type="submit" value="Add" class="pink-btn" />
+    </form>
+  </div>
+
+  {% for pizza in pizzas %}
+  <h2>Pizza name: {{ pizza.name }} <br> Pizza Description {{ pizza.text }} <br> Price: {{ pizza.price }} kr.</h2>
+  <a href="{% url 'pizza_app:edit_pizza' %}">edit pizza</a>
+  {% csrf_token %}
+  {% endfor %}
+
+</section>
+</body>
+
+</html>
+
+{% else %}
+
+<p>Not employee</p>
+{% endif %}
+{% endfor %}
+{% endblock %}

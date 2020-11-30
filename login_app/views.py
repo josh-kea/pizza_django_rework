@@ -2,9 +2,9 @@ from django.shortcuts import render, reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from . import models
 from .models import UserProfile
-from django.contrib.auth.decorators import login_required
 
 
 def login(request):
@@ -13,9 +13,14 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+        userProfile = UserProfile.objects.get(user=user)
         if user:
-            dj_login(request, user)
-            return HttpResponseRedirect(reverse('pizza_app:index'))
+            if userProfile.user_status != 'employee':
+                dj_login(request, user)
+                return HttpResponseRedirect(reverse('pizza_app:index'))
+            elif UserProfile.user_status != 'user':
+                dj_login(request, user)
+                return HttpResponseRedirect(reverse('pizza_app:employe_page'))
         else:
             context = {'error': 'Bad username or password.'}
     return render(request, 'login_app/login.html', context)
@@ -55,7 +60,6 @@ def password_reset_form(request):
     password = request.POST['password']
     confirm_password = request.POST['confirm_password']
     secret = request.POST['secret']
-
     user = User.objects.get(email=email)
     reset_request = models.PasswordResetRequest.objects.get(
         user=user, secret=secret)

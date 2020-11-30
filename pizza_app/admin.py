@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Account, Account_Transaction
+from .models import Pizza
 
-admin.site.register(Account)
-admin.site.register(Account_Transaction)
+admin.site.register(Pizza)
 
 # Register your models here.

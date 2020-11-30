@@ -6,10 +6,7 @@ app_name = "pizza_app"
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('completed_accounts/', views.completed_accounts,
-         name='completed_accounts'),
-    path('account_details/', views.account_details, name='account_details'),
-    path('account_deposit/', views.account_deposit, name='account_deposit'),
-    path('account_withdraw/', views.account_withdraw, name='account_withdraw'),
-    path('account_transfer/', views.account_transfer, name='account_transfer'),
+    path('employe_page/', views.employe_page, name='employe_page'),
+    path('base/', views.base, name='base'),
+    path('edit_pizza/', views.edit_pizza, name='edit_pizza'),
 ]
