@@ -8,6 +8,7 @@ import random
 @login_required
 def user_profile(request):
     if request.method == 'GET':
+        # Getting only a single user profile object to pass through in the context, instead of an array which has to be looped through
         userProfile = UserProfile.objects.get(user=request.user)
         context = {
             'userProfile': userProfile,

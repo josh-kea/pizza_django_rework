@@ -3,7 +3,10 @@ from django.contrib.auth.models import User
 from django.db import models
 import random
 
-class UserProfile(models.Model):
+# new
+# Adds UserProfile model to Pizza app instead
+# Easier to manage
+class UserProfile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     telephone = models.CharField(max_length=35)
     status = (
@@ -16,12 +19,12 @@ class UserProfile(models.Model):
 
     @classmethod
     def create_user(cls, username, password, email, telephone) -> User:
-        user = User.objects.create_user(username=username, password=password, email=email)
+        user = User.objects.create_user(username=username, password=password, email=email) # Creating a new Django user and also referencing this new user in a variable to be used later down when creating a user profile
 
         userProfile = cls()
         userProfile.user = user
         userProfile.telephone = telephone
-        userProfile.user_status = "customer" #Testing creating user with customer status
+        userProfile.user_status = "customer" #Hardcoded testing creating user with customer status so we can test further and improve
         userProfile.save()
 
         return user

@@ -4,6 +4,7 @@ from secrets import token_urlsafe
 
 from pizza_app.models import UserProfile
 
+# New, simplified models, no need for user profile here.
 
 class PasswordResetRequest(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
