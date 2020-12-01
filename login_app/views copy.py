@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login as dj_login, logout as dj_lo
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from . import models
-from pizza_app.models import UserProfile
+from ..pizza_app.models import UserProfile
 
 
 def login(request):
@@ -19,7 +19,7 @@ def login(request):
             if userProfile.user_status != 'employee':
                 dj_login(request, user)
                 return HttpResponseRedirect(reverse('pizza_app:customer_page'))
-            elif UserProfile.user_status != 'customer':
+            elif UserProfile.user_status != 'user':
                 dj_login(request, user)
                 return HttpResponseRedirect(reverse('pizza_app:employee_page'))
         else:
@@ -84,11 +84,11 @@ def signup(request):
         telephone = request.POST['telephone_number']
 
         if password == confirm_password:
-            try:
-                UserProfile.create_user(username, password, email, telephone)
-                return HttpResponseRedirect(reverse('login_app:login'), context)
+            try UserProfile.objects.create_user(username, password, email, telephone):
+                return HttpResponseRedirect(reverse('login_app:login'))
             except IntegrityError:
                 context['error'] = 'Could not create user account.'
+
         else:
             context = {'error': 'Passwords do not match.'}
     return render(request, 'login_app/signup.html', context)

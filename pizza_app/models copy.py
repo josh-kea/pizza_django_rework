@@ -3,9 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 import random
 
-class UserProfile(models.Model):
+class UserType(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    telephone = models.CharField(max_length=35)
     status = (
         ('employee', 'employee'),
         ('customer', 'customer')
@@ -13,17 +12,22 @@ class UserProfile(models.Model):
     user_status = models.CharField(
         choices=status, default='customer', max_length=250)
 
+    def __str__(self):
+        return f'{self.user}({self.user_status})'
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    user_type = models.ForeignKey(UserType, on_delete=models.PROTECT)
+    telephone = models.CharField(max_length=35)
 
     @classmethod
     def create_user(cls, username, password, email, telephone) -> User:
         user = User.objects.create_user(username=username, password=password, email=email)
-
-        userProfile = cls()
+        cls(user=user, telephone=telephone).save()
         userProfile.user = user
         userProfile.telephone = telephone
-        userProfile.user_status = "customer" #Testing creating user with customer status
         userProfile.save()
-
         return user
 
     def __str__(self):

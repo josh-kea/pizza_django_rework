@@ -7,7 +7,7 @@
 {% if userProfile.user_status == "employee" %}
 
 <section class="employe_page">
-  <a href="{% url 'login_app:user_profile' %}">View Profile Details</a>
+  <a href="">View Profile Details</a>
 
   {% for userProfile in userProfiles %}
   <h2>Helloooooo {{ user.username }}. {{ userProfile.user_status }}</h2>
