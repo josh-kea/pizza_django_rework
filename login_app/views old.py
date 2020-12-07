@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login as dj_login, logout as dj_lo
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from . import models
-from pizza_app.models import UserProfile
+from ..pizza_app.models import UserProfile
 
 
 def login(request):
@@ -14,16 +14,14 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        userProfile = UserProfile.objects.get(user=user) # Finds user profile and references in variable to be used below
-
-        # If a user is matched
-        if user: 
+        userProfile = UserProfile.objects.get(user=user)
+        if user:
             if userProfile.user_status != 'employee':
                 dj_login(request, user)
-                return HttpResponseRedirect(reverse('pizza_app:customer_page')) # new
-            elif UserProfile.user_status != 'customer':
+                return HttpResponseRedirect(reverse('pizza_app:customer_page'))
+            elif UserProfile.user_status != 'user':
                 dj_login(request, user)
-                return HttpResponseRedirect(reverse('pizza_app:employee_page')) # new
+                return HttpResponseRedirect(reverse('pizza_app:employee_page'))
         else:
             context = {'error': 'Bad username or password.'}
     return render(request, 'login_app/login.html', context)
@@ -76,7 +74,6 @@ def password_reset_form(request):
     return render(request, 'login_app/password_reset_form.html', context)
 
 
-# signup naming changed
 def signup(request):
     context = {}
     if request.method == 'POST':
@@ -87,16 +84,12 @@ def signup(request):
         telephone = request.POST['telephone_number']
 
         if password == confirm_password:
-            # New try function, to try creating a new user via the userProfile @classmethod create_user . Remember inside this @classmethod we are creating the Django User object too.
-            try:
-                UserProfile.create_user(username, password, email, telephone)
-                return HttpResponseRedirect(reverse('login_app:login'), context)
-
-            # If the try fails then send context that we could not create a user account
+            try UserProfile.objects.create_user(username, password, email, telephone):
+                return HttpResponseRedirect(reverse('login_app:login'))
             except IntegrityError:
                 context['error'] = 'Could not create user account.'
+
         else:
-            # If passwords do not match.
             context = {'error': 'Passwords do not match.'}
     return render(request, 'login_app/signup.html', context)
 

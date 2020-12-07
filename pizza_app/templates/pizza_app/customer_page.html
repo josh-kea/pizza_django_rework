@@ -4,19 +4,24 @@
 
 {% block content %}
 <section class="user_page">
+    {% csrf_token %}
     <div class="menu_container">
-        <h1>Menu</h1>
+        <h1>Customer (PAGE) Menu</h1>
 
-        <a href="{% url 'login_app:user_profile' %}">View Profile Details</a>
+        
 
         {% for userProfile in userProfiles %}
         <h2>Helloooooo {{ user.username }}. {{ userProfile.user_status }}</h2>
+        <a href="{% url 'pizza_app:user_profile' %}" style="color:white !important">View Profile Details</a>
         {% endfor%}
 
-
+        <form action="">
+            
+        </form>
         {% for pizza in pizzas %}
-        <h2>Pizza name: {{ pizza.name }} <br> Pizza Description: {{ pizza.text }} <br> Price: {{ pizza.price }} kr.</h2>
+        <h2>Pizza name: {{ pizza.name }} <br> Pizza Description: {{ pizza.text }} <br> Price: {{ pizza.price }} kr.</h2> <button>Add To Cart</button>
         {% endfor %}
+        <a href="{% url 'login_app:logout' %}">Logout</a>
     </div>
 
     <div class="img_container">

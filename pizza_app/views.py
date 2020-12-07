@@ -1,25 +1,35 @@
 from django.shortcuts import render, get_object_or_404, reverse
-from login_app.models import UserProfile
-from .models import Pizza
+from .models import UserProfile, Pizza
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 import random
 # Create your views here.
 
+@login_required
+def user_profile(request):
+    if request.method == 'GET':
+        # Getting only a single user profile object to pass through in the context, instead of an array which has to be looped through
+        userProfile = UserProfile.objects.get(user=request.user)
+        context = {
+            'userProfile': userProfile,
+    }
+    return render(request, 'pizza_app/user_profile.html', context)
+
+
 
 @login_required
-def index(request):
+def customer_page(request):
     pizzas = Pizza.objects.all()
     userProfiles = UserProfile.objects.filter(user=request.user)
     context = {
         'pizzas': pizzas,
         'userProfiles': userProfiles,
     }
-    return render(request, 'pizza_app/index.html', context)
+    return render(request, 'pizza_app/customer_page.html', context)
 
 
 @login_required
-def employe_page(request):
+def employee_page(request):
     if request.method == 'POST':
         name = request.POST['pizza_name']
         text = request.POST['pizza_text']
@@ -35,7 +45,7 @@ def employe_page(request):
         'pizzas': pizzas,
         'userProfiles': userProfiles,
     }
-    return render(request, 'pizza_app/employe_page.html', context)
+    return render(request, 'pizza_app/employee_page.html', context)
 
 
 @login_required

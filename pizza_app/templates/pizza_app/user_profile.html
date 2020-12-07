@@ -11,13 +11,11 @@
       {% csrf_token %}
       <input type="hidden" name="username" value="{{user.username}}" />
     </form>
-    {% for userProfile in userProfiles %}
     <ul class="user-list">
       <li>User phone number:</li>
       {{ userProfile.telephone_number }}
       <li>Your Ranking is:</li>
       {{ userProfile.user_rank }}
     </ul>
-    {% endfor %}
   </body>
   {% endblock %}

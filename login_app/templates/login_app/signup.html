@@ -8,7 +8,7 @@
   <div class="signup_container">
     <h1>Sign Up</h1>
     <hr />
-    <form action="{% url 'login_app:sign_up' %}" method="POST">
+    <form action="{% url 'login_app:signup' %}" method="POST">
       {% csrf_token %}
       <input type="text" name="username" placeholder="User Name" />
       <input type="password" name="password" placeholder="Password" />
