@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, reverse
-from .models import UserProfile, Pizza
+from django.db.utils import IntegrityError
+from .models import UserProfile, Pizza, Order
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 import random
@@ -25,7 +26,27 @@ def customer_page(request):
         'pizzas': pizzas,
         'userProfiles': userProfiles,
     }
+
+    if request.method == 'POST':
+        #delivery_date_time user must specify
+        delivery_date_time = request.POST['delivery_time']
+        pizza_id = request.POST['pizza_id']
+        pizza_name = request.POST['pizza_name']
+        pizza_price = request.POST['pizza_price']
+
+        try:
+            order = Order.create(delivery_date_time, pizza_id, pizza_name, pizza_price)
+            return render(request, 'pizza_app/thank_you.html', order)
+
+        except IntegrityError:
+            context['error'] = 'Could not create order.'
+
     return render(request, 'pizza_app/customer_page.html', context)
+
+@login_required
+def thank_you(request):
+
+    return render(request, 'pizza_app/thank_you.html')
 
 
 @login_required
@@ -59,6 +80,18 @@ def base(request):
 
 @login_required
 def edit_pizza(request):
+    pizzas = Pizza.objects.all()
+    userProfiles = UserProfile.objects.filter(user=request.user)
+    context = {
+        'pizzas': pizzas,
+        'userProfiles': userProfiles,
+    }
+    return render(request, 'pizza_app/edit_pizza.html', context)
+
+
+# CREATE ORDER
+@login_required
+def create_order(request):
     pizzas = Pizza.objects.all()
     userProfiles = UserProfile.objects.filter(user=request.user)
     context = {
