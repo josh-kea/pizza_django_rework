@@ -10,5 +10,6 @@ urlpatterns = [
     path('user_profile/', views.user_profile, name='user_profile'), # new
     path('base/', views.base, name='base'),
     path('edit_pizza/', views.edit_pizza, name='edit_pizza'),
+    path('thank_you/', views.thank_you, name='thank_you'),
     
 ]

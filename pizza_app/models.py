@@ -51,3 +51,34 @@ class Pizza(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+class Order(models.Model):
+    status = (
+        ('pending', 'pending'),
+        ('delivering', 'delivering'),
+        ('delivered', 'delivered'),
+    )
+
+    order_id = models.IntegerField(null=False, default="0")
+    order_date_time = models.DateTimeField(auto_now_add=True)
+    delivery_date_time = models.DateTimeField(default='20:00')
+    total_price = models.IntegerField(default=0)
+    order_status = models.CharField(
+        choices=status, default='pending', max_length=250)
+    pizzas = models.CharField(max_length=250, default = "Pepperoni")
+
+    @classmethod
+    def create(cls, delivery_date_time, pizza_id, pizza_name, pizza_price):
+        order = cls()
+        order.order_id = random.randint(100000, 400000)
+        # order.order_date_time = order_date_time
+        order.delivery_date_time = delivery_date_time
+        order.total_price = pizza_price
+        #order.order_status = order_status
+
+
+        order.pizzas = pizza_name
+        order.save()
+
+    def __str__(self):
+        return f"Order #{self.order_id} - Pizzas: {self.pizzas}"

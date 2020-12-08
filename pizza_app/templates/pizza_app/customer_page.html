@@ -19,7 +19,20 @@
             
         </form>
         {% for pizza in pizzas %}
-        <h2>Pizza name: {{ pizza.name }} <br> Pizza Description: {{ pizza.text }} <br> Price: {{ pizza.price }} kr.</h2> <button>Add To Cart</button>
+        <form method="POST"> 
+            {% csrf_token %}
+            <input type="hidden" name="pizza_id" value="{{pizza.pizza_id}}" /> 
+            <input type="hidden" name="pizza_price" value="{{pizza.price}}" />
+            <input type="hidden" name="pizza_name" value="{{pizza.name}}" />
+
+            <h2>Pizza name: {{ pizza.name }} 
+            <br> Pizza Description: {{ pizza.text }} 
+            <br> Price: {{ pizza.price }} kr.
+            </h2> 
+            <label for="delivery_time">Delivery time (date and time):</label>
+            <input type="datetime-local" name="delivery_time">
+            <button>Add To Cart</button>
+        </form>
         {% endfor %}
         <a href="{% url 'login_app:logout' %}">Logout</a>
     </div>
