@@ -6,7 +6,9 @@ import random
 # new
 # Adds UserProfile model to Pizza app instead
 # Easier to manage
-class UserProfile(models.Model): 
+
+
+class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     telephone = models.CharField(max_length=35)
     status = (
@@ -16,22 +18,23 @@ class UserProfile(models.Model):
     user_status = models.CharField(
         choices=status, default='customer', max_length=250)
 
-
     @classmethod
     def create_user(cls, username, password, email, telephone) -> User:
-        user = User.objects.create_user(username=username, password=password, email=email) # Creating a new Django user and also referencing this new user in a variable to be used later down when creating a user profile
+        # Creating a new Django user and also referencing this new user in a variable to be used later down when creating a user profile
+        user = User.objects.create_user(
+            username=username, password=password, email=email)
 
         userProfile = cls()
         userProfile.user = user
         userProfile.telephone = telephone
-        userProfile.user_status = "customer" #Hardcoded testing creating user with customer status so we can test further and improve
+        # Hardcoded testing creating user with customer status so we can test further and improve
+        userProfile.user_status = "customer"
         userProfile.save()
 
         return user
 
     def __str__(self):
         return f'{self.user}'
-
 
 
 class Pizza(models.Model):
@@ -52,6 +55,7 @@ class Pizza(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
 class Order(models.Model):
     status = (
         ('pending', 'pending'),
@@ -65,7 +69,7 @@ class Order(models.Model):
     total_price = models.IntegerField(default=0)
     order_status = models.CharField(
         choices=status, default='pending', max_length=250)
-    pizzas = models.CharField(max_length=250, default = "Pepperoni")
+    pizzas = models.CharField(max_length=250, default="Pepperoni")
 
     @classmethod
     def create(cls, delivery_date_time, pizza_id, pizza_name, pizza_price):
@@ -75,7 +79,6 @@ class Order(models.Model):
         order.delivery_date_time = delivery_date_time
         order.total_price = pizza_price
         #order.order_status = order_status
-
 
         order.pizzas = pizza_name
         order.save()
