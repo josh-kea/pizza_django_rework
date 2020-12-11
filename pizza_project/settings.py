@@ -51,11 +51,21 @@ INSTALLED_APPS = [
 # Setting up permissions and authorization settings for REST API
 REST_FRAMEWORK = {
    'DEFAULT_PERMISSION_CLASSES': [
-      'pizza_app.permissions.IsOwnerOrNoAccess',
-      'rest_framework.permissions.IsAuthenticated',
+       # Use below if you want to make a custom permission class
+      #'pizza_app.permissions.IsEmployeeOrNoAccess',
+
+      # Use below if you want to use Django defauly admin permissions
+      'rest_framework.permissions.IsAdminUser'
+
+      # Use below if you want to use token authentication.
+      #'rest_framework.permissions.IsAuthenticated',
    ],
    'DEFAULT_AUTHENTICATION_CLASSES': [
-      'rest_framework.authentication.TokenAuthentication',
+      # Use below if you want to use token authentication.
+      #'rest_framework.authentication.TokenAuthentication',
+      
+      # Use below if you want to use session authentication.
+      'rest_framework.authentication.SessionAuthentication',
    ]
 }
 
