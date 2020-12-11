@@ -10,17 +10,21 @@
   <h1>Transactions</h1>
 </div>
 
-<a href="{% url 'pizza_app:customer_page' %}">Home</a>
+<a href="{% url 'pizza_app:employee_page' %}">Home</a>
 <hr />
-<ul>
-  {% for pizza in pizzas %}
-  Account Name: {{ pizza.name }}
-  Account price: {{ pizza.price }}
-  Your Balance {{ account.balance }}
+<form method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="pizza_id" value="{{pizza.pizza_id}}" />
+  <input type="hidden" name="pizza_price" value="{{pizza.price}}" />
+  <input type="hidden" name="pizza_name" value="{{pizza.name}}" />
 
-  {% endfor %}
-</ul>
-<p>HEJJJJJ</p>
+  <h2>Pizza name: {{ pizza.name }}
+    <br> Pizza Description: {{ pizza.text }}
+    <br> Price: {{ pizza.price }} kr.
+  </h2>
+</form>
+
+
 
 </body>
 

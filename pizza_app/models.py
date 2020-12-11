@@ -38,7 +38,7 @@ class UserProfile(models.Model):
 
 
 class Pizza(models.Model):
-    pizza_id = random.randint(100000, 400000)
+    pizza_id = models.IntegerField(null=False, default="0")
     name = models.CharField(max_length=250)
     text = models.CharField(max_length=250)
     price = models.IntegerField(default=0)
@@ -46,7 +46,7 @@ class Pizza(models.Model):
     @classmethod
     def create(cls, pizza_id, name, text, price):
         pizza = cls()
-        pizza.pizza_id = pizza_id
+        pizza.pizza_id = random.randint(100000, 400000)
         pizza.name = name
         pizza.text = text
         pizza.price = price
