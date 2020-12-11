@@ -37,9 +37,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 3rd party apps for REST interface
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+
+    #Our pizza apps
     'login_app',
     'pizza_app',
 ]
+
+# Setting up permissions and authorization settings for REST API
+REST_FRAMEWORK = {
+   'DEFAULT_PERMISSION_CLASSES': [
+      'pizza_app.permissions.IsOwnerOrNoAccess',
+      'rest_framework.permissions.IsAuthenticated',
+   ],
+   'DEFAULT_AUTHENTICATION_CLASSES': [
+      'rest_framework.authentication.TokenAuthentication',
+   ]
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
