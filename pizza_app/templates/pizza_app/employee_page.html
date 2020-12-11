@@ -30,8 +30,10 @@
 
   {% for pizza in pizzas %}
   <h2>Pizza name: {{ pizza.name }} <br> Pizza Description {{ pizza.text }} <br> Price: {{ pizza.price }} kr.</h2>
-  <a href="{% url 'pizza_app:edit_pizza' %}">edit pizza</a>
+  <a href="{% url 'pizza_app:edit_pizza' pizza.pizza_id %}">Edit pizza</a>
   {% csrf_token %}
+
+
   {% endfor %}
 
 </section>
