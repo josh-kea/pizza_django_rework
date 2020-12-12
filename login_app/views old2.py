@@ -5,9 +5,7 @@ from django.contrib.auth import authenticate, login as dj_login, logout as dj_lo
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from . import models
-from .models import PasswordResetRequest
 from pizza_app.models import UserProfile
-
 
 # EMAILS
 import django_rq
@@ -44,26 +42,47 @@ def password_reset(request):
 
     if request.method == "POST":
         email = request.POST['email']
-        user = User.objects.get(email__exact=email)
+        user = User.objects.get(email=email)
+        reset_request = models.PasswordResetRequest()
+        reset_request.user = user
+        reset_request.save()
+        url = reverse('login_app:password_reset_secret',
+                      args=[f'{reset_request.secret}'])
+        url = f'{request.scheme}://{request.META["HTTP_HOST"]}{url}'
+        print(url)
+        context = {
+            'message': 'Please click the link in the email we sent to you.'}
 
-        if email:
+    return render(request, 'login_app/password_reset.html', context)
+
+
+def request_password_reset(request):
+   if request.method == "POST":
+      post_user = request.POST['username']
+      user = None
+
+      if post_user:
             try:
-               user = User.objects.get(email__exact=email)
-               print(f"{email}")
+               user = User.objects.get(username=post_user)
             except:
-               print(f"No user with {user} found??")
-        if user:
+               print(f"Invalid password request: {post_user}")
+      else:
+            post_user = request.POST['email']
+            try:
+               user = User.objects.get(email=post_user)
+            except:
+               print(f"Invalid password request: {post_user}")
+      if user:
             prr = PasswordResetRequest()
             prr.user = user
             prr.save()
             django_rq.enqueue(email_message, {
-               'token' : prr.secret,
+               'token' : prr.token,
                'email' : prr.user.email,
             })
-            print(f"Secret sent to {prr.user.email} ??")
             return HttpResponseRedirect(reverse('login_app:password_reset'))
-    
-    return render(request, 'login_app/password_reset.html')
+
+   return render(request, 'login_app/request_password_reset.html')
 
 
 def password_reset_secret(request, secret):
