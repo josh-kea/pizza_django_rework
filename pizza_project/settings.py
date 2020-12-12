@@ -69,8 +69,14 @@ REST_FRAMEWORK = {
    ]
 }
 
+IPFILTER_MIDDLEWARE = {
+    'ALLOWED_IP_ADDRESSES': [
+        '127.0.0.1',
+    ]
+}
 
 MIDDLEWARE = [
+    'pizza_app.middleware.IPFilterMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
