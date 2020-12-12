@@ -7,6 +7,10 @@ import random
 from .utils import is_pizza_employee
 # Create your views here.
 
+# EMAILS
+import django_rq
+from . messaging import email_message
+
 
 def index(request):
     if is_pizza_employee(request.user):
