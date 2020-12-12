@@ -42,11 +42,33 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+    'django_rq',
 
     #Our pizza apps
     'login_app',
     'pizza_app',
 ]
+
+## TASK QUEUES SETTINGS FOR EMAIL, MATCHES REDIS SERVER PORT ON LOCALHOST
+
+RQ_QUEUES = {
+    'default': {
+    'HOST': 'localhost',
+    'PORT': '6379',
+    'DB': 0,
+    'DEFAULT_TIMEOUT': 360,
+    }
+}
+
+# EMAIL SETTINGS
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+#EMAIL_USE_SSL = True ### <--- DON'T USE THIS - USE EMAIL_USE_TLS
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'joshkap2015@gmail.com'
+EMAIL_HOST_PASSWORD = 'CYIJEhMxqRgkU9H3'
 
 # Setting up permissions and authorization settings for REST API
 REST_FRAMEWORK = {
