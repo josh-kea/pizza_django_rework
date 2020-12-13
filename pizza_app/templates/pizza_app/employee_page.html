@@ -1,21 +1,21 @@
 {% extends 'pizza_app/base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Edit pizza{% endblock %}
 
 {% block content %}
 {% for userProfile in userProfiles %}
 {% if userProfile.user_status == "employee" %}
 
 <section class="employe_page">
-  <a href="">View Profile Details</a>
 
   {% load static %}
 
   {% for userProfile in userProfiles %}
   <p class="greeting-text">Hello <b>{{ user.username }}</b> ({{ userProfile.user_status }})</p>
-  <a class="profile-details-btn" style="color:black;" href="{% url 'pizza_app:user_profile' %}" style="color:white !important">View Profile Details</a>
+  <a class="profile-details-btn" style="color:black;" href="{% url 'pizza_app:user_profile' %}"
+    style="color:white !important">View Profile Details</a>
   {% endfor%}
- 
+
 
   <!-- CREATE NEW PIZZA -->
 
@@ -27,16 +27,31 @@
       <input type="text" placeholder="Text" name="pizza_text" />
       <input type="number" placeholder="Price" name="pizza_price" />
       <br>
-      <input type="submit" value="Add" class="pink-btn" />
+      <input type="submit" value="Add" />
     </form>
   </div>
+  <div class="white_line"></div>
+  <br>
+
 
   {% for pizza in pizzas %}
-  <h2>Pizza name: {{ pizza.name }} <br> Pizza Description {{ pizza.text }} <br> Price: {{ pizza.price }} kr.</h2>
-  <a href="{% url 'pizza_app:edit_pizza' pizza.pizza_id %}">Edit pizza</a>
-  {% csrf_token %}
+  <div class="pizza-block">
+    <div class="pizza-content2">
+      <div>
+        <h2 class="pizza-name">{{ pizza.name }}</h2>
+        <p>{{ pizza.price }} kr.</p>
+        <p class="pizza-text">{{ pizza.text }}, a nice handmade pizza.</p>
+        <a class="edit-pizza-btn" href="{% url 'pizza_app:edit_pizza' pizza.pizza_id %}">Edit pizza</a>
+      </div>
 
-
+      <div class="pizza-img">
+        <img
+          src="//s3-eu-west-1.amazonaws.com/plantjammerbackend1/__sized__/pizzamexican-70f29787aa65faca2cbf20d354296030.jpg"
+          alt="">
+      </div>
+    </div>
+  </div>
+  </div>
   {% endfor %}
 
 </section>

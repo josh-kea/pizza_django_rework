@@ -123,8 +123,10 @@ def update_pizza(request):
     pizza_id = request.POST['pizza_id']
     pizza = get_object_or_404(Pizza, pizza_id=pizza_id)
     price = request.POST['pizza_price']
+    text = request.POST['pizza_text']
     name = request.POST['pizza_name']
     pizza.price = price
+    pizza.text = text
     pizza.name = name
     pizza.save()
 
