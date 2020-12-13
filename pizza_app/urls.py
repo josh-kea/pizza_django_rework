@@ -13,7 +13,7 @@ urlpatterns = [
     path('edit_pizza/<int:pizza_id>/', views.edit_pizza, name='edit_pizza'),
     path('delete_pizza/', views.delete_pizza, name='delete_pizza'),
     path('update_pizza/', views.update_pizza, name='update_pizza'),
-    path('thank_you/', views.thank_you, name='thank_you'),
+    path('thank_you/<int:order_id>/', views.thank_you, name='thank_you'),
     path('api/v1/', PizzaList.as_view()),
     path('api/v1/<int:pk>/', PizzaDetail.as_view()),
 #    path('api/v1/rest-auth/', include('rest_auth.urls')),
