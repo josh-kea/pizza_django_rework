@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.db.utils import IntegrityError
+from django.contrib.auth import get_user_model
 from .models import UserProfile, Pizza, Order
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -96,6 +97,7 @@ def base(request):
     return render(request, 'pizza_app/base.html', context)
 
 
+# edit PIZZA page
 @login_required
 def edit_pizza(request, pizza_id):
     pizza = get_object_or_404(Pizza, pizza_id=pizza_id)
@@ -104,7 +106,42 @@ def edit_pizza(request, pizza_id):
     }
     return render(request, 'pizza_app/edit_pizza.html', context)
 
+# Delete PIZZA
+
+
+def delete_pizza(request):
+    pizza_id = request.POST['pizza_id']
+    pizza = get_object_or_404(Pizza, pizza_id=pizza_id)
+    pizza.delete()
+
+    return HttpResponseRedirect(reverse('pizza_app:employee_page'))
+
+# Update Pizza
+
+
+def update_pizza(request):
+    pizza_id = request.POST['pizza_id']
+    pizza = get_object_or_404(Pizza, pizza_id=pizza_id)
+    price = request.POST['pizza_price']
+    name = request.POST['pizza_name']
+    pizza.price = price
+    pizza.name = name
+    pizza.save()
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
 # CREATE ORDER
+
+@login_required
+def edit_customers(request):
+    customers = get_user_model().objects.all()
+    profiles = UserProfile.objects.all()
+    context = {
+        'customers': customers,
+        'profiles': profiles,
+    }
+    return render(request, 'pizza_app/edit_customers.html', context)
 
 
 @login_required
