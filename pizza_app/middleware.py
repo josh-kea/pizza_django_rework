@@ -14,7 +14,7 @@ class IPFilterMiddleware:
 
       allowed_ip_addresses = settings.IPFILTER_MIDDLEWARE['ALLOWED_IP_ADDRESSES']
       client_ip_address = request.META.get('REMOTE_ADDR')
-      print(f'** client ip address: {client_ip_address}')
+      print(f'MIDDLEWARE WORKING -- ** client ip address: {client_ip_address}')
 
       if not client_ip_address in allowed_ip_addresses:
             raise PermissionDenied

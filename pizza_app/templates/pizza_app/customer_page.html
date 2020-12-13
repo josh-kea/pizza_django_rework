@@ -18,8 +18,11 @@
         <form action="">
 
         </form>
+        <div class="pizzas-wrapper">
+
+        
         {% for pizza in pizzas %}
-        <form method="POST">
+        <form method="POST" >
             {% csrf_token %}
             <input type="hidden" name="pizza_id" value="{{pizza.pizza_id}}" />
             <input type="hidden" name="pizza_price" value="{{pizza.price}}" />
@@ -30,11 +33,12 @@
                 <br> Price: {{ pizza.price }} kr.
             </h2>
             <label for="delivery_time" id="start">Delivery time (date and time): </label>
-            <input type="datetime-local" name="delivery_time" min="2010-06-12T00:00" max="2021-06-12T00:00">>
+            <input type="datetime-local" name="delivery_time" min="2010-06-12T00:00" max="2021-06-12T00:00" required>
 
-            <button>Add To Cart</button>
+            <button>Order</button>
         </form>
         {% endfor %}
+        </div>
         <a href="{% url 'login_app:logout' %}">Logout</a>
     </div>
 
@@ -42,6 +46,15 @@
 
     </div>
 </section>
+
+<style>
+.pizzas-wrapper {
+    max-width:1200px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+}
+</style>
 
 
 </body>

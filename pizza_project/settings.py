@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #Chat app
+    'channels',
+    'chat',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,12 +46,28 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+
+    # TASK QUEUES NEW
     'django_rq',
 
     #Our pizza apps
     'login_app',
     'pizza_app',
+
+
 ]
+
+# Channels SETTINGS - NEW
+ASGI_APPLICATION = 'pizza_project.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 ## TASK QUEUES SETTINGS FOR EMAIL, MATCHES REDIS SERVER PORT ON LOCALHOST
 
