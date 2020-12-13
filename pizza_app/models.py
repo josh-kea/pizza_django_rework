@@ -20,6 +20,7 @@ class UserProfile(models.Model):
 
     @classmethod
     def create_user(cls, username, password, email, telephone) -> User:
+        user = None
         # Creating a new Django user and also referencing this new user in a variable to be used later down when creating a user profile
         user = User.objects.create_user(
             username=username, password=password, email=email)
@@ -82,6 +83,7 @@ class Order(models.Model):
 
         order.pizzas = pizza_name
         order.save()
+        return order
 
     def __str__(self):
         return f"Order #{self.order_id} - Pizzas: {self.pizzas}"

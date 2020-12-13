@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 import random
 from .utils import is_pizza_employee
+from django.urls import reverse
+from django.shortcuts import redirect
 # Create your views here.
 
 # EMAILS
@@ -38,13 +40,19 @@ def customer_page(request):
         pizza_name = request.POST['pizza_name']
         pizza_price = request.POST['pizza_price']
 
-        try:
-            order = Order.create(delivery_date_time,
-                                 pizza_id, pizza_name, pizza_price)
-            return render(request, 'pizza_app/thank_you.html', order)
-
-        except IntegrityError:
-            context['error'] = 'Could not create order.'
+        order = Order.create(delivery_date_time,
+                            pizza_id, pizza_name, pizza_price)
+        context = {
+            'order': order
+        }                 
+        print(order.order_id)  
+        print(order.order_id)  
+        print(order.order_id)  
+        print(order.order_id)  
+        print(order.order_id)   
+        # return HttpResponseRedirect(reverse('pizza_app:thank_you/'+ str(order.order_id)))
+        return redirect('thank_you/'+ str(order.order_id))
+        #return render(request, 'pizza_app/customer_page.html', context)
 
     return render(request, 'pizza_app/customer_page.html', context)
 
@@ -61,9 +69,12 @@ def user_profile(request):
 
 
 @login_required
-def thank_you(request):
-
-    return render(request, 'pizza_app/thank_you.html')
+def thank_you(request, order_id):
+    order = get_object_or_404(Order, order_id=order_id)
+    context = {
+        'order': order,
+    }
+    return render(request, 'pizza_app/thank_you.html', context)
 
 
 @login_required
