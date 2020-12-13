@@ -40,7 +40,7 @@
       <div>
         <h2 class="pizza-name">{{ pizza.name }}</h2>
         <p>{{ pizza.price }} kr.</p>
-        <p class="pizza-text">{{ pizza.text }}, a nice handmade pizza.</p>
+        <p class="pizza-text">{{ pizza.text }}</p>
         <a class="edit-pizza-btn" href="{% url 'pizza_app:edit_pizza' pizza.pizza_id %}">Edit pizza</a>
       </div>
 

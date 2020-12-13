@@ -2,10 +2,12 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from .api import PizzaList, PizzaDetail
+from login_app import urls as login_app
 
 app_name = "pizza_app"
 
 urlpatterns = [
+    path('', login_app.views.login, name='login'),
     path('customer_page', views.customer_page, name='customer_page'),
     path('employee_page/', views.employee_page, name='employee_page'),
     path('user_profile/', views.user_profile, name='user_profile'),  # new
