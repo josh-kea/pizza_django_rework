@@ -22,6 +22,5 @@ def create_order(sender, instance, **kwargs):
     print(kwargs)
     if not Order.objects.exists():
         order = Order()
-        order.order_id = instance
         order.save()
     

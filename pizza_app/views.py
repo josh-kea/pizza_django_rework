@@ -46,7 +46,7 @@ def customer_page(request):
             'order': order
         }                 
         # return HttpResponseRedirect(reverse('pizza_app:thank_you/'+ str(order.order_id)))
-        return redirect('thank_you/'+ str(order.order_id))
+        return redirect('thank_you/'+ str(order.pk))
         #return render(request, 'pizza_app/customer_page.html', context)
 
     return render(request, 'pizza_app/customer_page.html', context)
@@ -64,8 +64,8 @@ def user_profile(request):
 
 
 @login_required
-def thank_you(request, order_id):
-    order = get_object_or_404(Order, order_id=order_id)
+def thank_you(request, pk):
+    order = get_object_or_404(Order, pk=pk)
     context = {
         'order': order,
     }
