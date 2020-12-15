@@ -97,7 +97,7 @@ class Order(models.Model):
         # current_user = request.user # Getting current user
         # current_user = user = "Test"
         channel_layer = get_channel_layer()
-        data = "notification"+ "...." + str("Date Time") # Pass any data based on your requirement
+        data = "Order #"+ str(self.order_id) + " placed." # Pass any data based on your requirement
         # Trigger message sent to group
         async_to_sync(channel_layer.group_send)(
             str("Order_Notification_Group"),  # Group Name, Should always be string
