@@ -87,3 +87,5 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.order_id} - Pizzas: {self.pizzas}"
+
+        # simple responsibility principles

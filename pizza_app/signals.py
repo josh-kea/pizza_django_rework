@@ -24,3 +24,4 @@ def create_order(sender, instance, **kwargs):
         order = Order()
         order.order_id = instance
         order.save()
+    

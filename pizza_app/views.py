@@ -45,11 +45,6 @@ def customer_page(request):
         context = {
             'order': order
         }                 
-        print(order.order_id)  
-        print(order.order_id)  
-        print(order.order_id)  
-        print(order.order_id)  
-        print(order.order_id)   
         # return HttpResponseRedirect(reverse('pizza_app:thank_you/'+ str(order.order_id)))
         return redirect('thank_you/'+ str(order.order_id))
         #return render(request, 'pizza_app/customer_page.html', context)
