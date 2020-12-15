@@ -88,6 +88,7 @@ class Order(models.Model):
         order.pizzas = pizza_name
         order.save()
 
+        # Using non class methods - rather methods on the instance that was created:
         order.create_order_notification()
         order.test_print()
 
