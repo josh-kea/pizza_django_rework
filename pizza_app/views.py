@@ -105,8 +105,8 @@ def base(request):
 
 # edit PIZZA page
 @login_required
-def edit_pizza(request, pizza_id):
-    pizza = get_object_or_404(Pizza, pizza_id=pizza_id)
+def edit_pizza(request, pk):
+    pizza = get_object_or_404(Pizza, pk=pk)
     context = {
         'pizza': pizza,
     }
