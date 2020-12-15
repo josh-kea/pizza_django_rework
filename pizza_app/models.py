@@ -7,9 +7,13 @@ import random, _datetime
 # Adds UserProfile model to Pizza app instead
 # Easier to manage
 
-# CHANNELS FOR WHEN ORDER IS PLACED
+# CHANNELS FOR NOTIFICATION WHEN ORDER IS PLACED
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+
+# DJANGO RQ FOR EMAIL WHEN ORDER IS PLACED
+import django_rq
+from . messaging import email_message, admin_order_email, user_order_email
 
 
 class UserProfile(models.Model):
@@ -90,6 +94,7 @@ class Order(models.Model):
 
         # Using non class methods - rather methods on the instance that was created:
         order.create_order_notification()
+        order.send_order_confirmation_emails()
         order.test_print()
 
         return order
@@ -107,6 +112,16 @@ class Order(models.Model):
                 "text": data,
             },
         )
+
+    def send_order_confirmation_emails(self):
+        django_rq.enqueue(admin_order_email, {
+               'order_id' : str(self.pk),
+               'email' : 'joshkap2015@gmail.com',
+            })
+        django_rq.enqueue(user_order_email, {
+               'order_id' : str(self.pk),
+               'email' : 'joshkap2015@gmail.com',
+            })
 
     def test_print(self):
         print("Testing the print method. Order id: #" + str(self.pk))
