@@ -1,11 +1,15 @@
 from uuid import uuid4
 from django.contrib.auth.models import User
 from django.db import models
-import random
+import random, _datetime
 
 # new
 # Adds UserProfile model to Pizza app instead
 # Easier to manage
+
+# CHANNELS FOR WHEN ORDER IS PLACED
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 class UserProfile(models.Model):
@@ -83,9 +87,33 @@ class Order(models.Model):
 
         order.pizzas = pizza_name
         order.save()
+
+        order.create_order_notification()
+        order.test_print()
+
         return order
+
+    def create_order_notification(self):
+        # current_user = request.user # Getting current user
+        # current_user = user = "Test"
+        channel_layer = get_channel_layer()
+        data = "notification"+ "...." + str("Date Time") # Pass any data based on your requirement
+        # Trigger message sent to group
+        async_to_sync(channel_layer.group_send)(
+            str("Order_Notification_Group"),  # Group Name, Should always be string
+            {
+                "type": "notify",   # Custom Function written in the consumers.py
+                "text": data,
+            },
+        )
+
+    def test_print(self):
+        print("Testing the print method. Order id: #" + str(self.order_id))
 
     def __str__(self):
         return f"Order #{self.order_id} - Pizzas: {self.pizzas}"
 
         # simple responsibility principles
+
+
+
