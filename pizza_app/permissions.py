@@ -3,11 +3,13 @@ from django.contrib.auth.models import User
 from .models import UserProfile
 
 class IsEmployeeOrNoAccess(permissions.BasePermission):
+    """
+    Global permission check if user is employee
+    """
 
-   def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
-            return True
+    def has_permission(self, request, view):
+        userprofile = UserProfile.objects.get(user=request.user)
 
-        # userProfile = User.objects.get(user=request.user)
-        # if userProfile.status == 'employee':
-        #     return obj.user == request.user
+        if userprofile.user_status is 'employee':
+            print(request.user.name + " has permission to view " + str(view))
+            return true

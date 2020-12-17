@@ -95,10 +95,10 @@ EMAIL_HOST_PASSWORD = 'Devboy#1'
 # Setting up permissions and authorization settings for REST API
 REST_FRAMEWORK = {
    'DEFAULT_PERMISSION_CLASSES': [
-       # Use below if you want to make a custom permission class
-      #'pizza_app.permissions.IsEmployeeOrNoAccess',
+      # Use below if you want to make a custom permission class
+      'pizza_app.permissions.IsEmployeeOrNoAccess',
 
-      # Use below if you want to use Django defauly admin permissions
+      # Use below if you want to use Django default admin permissions
       'rest_framework.permissions.IsAdminUser'
 
       # Use below if you want to use token authentication.
