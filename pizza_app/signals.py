@@ -9,19 +9,11 @@ def create_user_profile(sender, instance, **kwargs):
     print("**** signal received")
     print(sender)
     print(kwargs)
-    if not UserProfile.objects.filter(user=instance).exists():
-        user_profile = UserProfile()
-        user_profile.user = instance
-        user_profile.save()
 
 
 @receiver(post_save, sender=Order, dispatch_uid="create_order")
 def create_order(sender, instance, **kwargs):
-    print("**** order created")
+    print("**** Order created #"+ Order.pk)
     print(sender)
     print(kwargs)
-    if not Order.objects.exists():
-        order = Order()
-        order.order_id = instance
-        order.save()
     

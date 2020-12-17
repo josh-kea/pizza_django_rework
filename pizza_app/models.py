@@ -1,11 +1,19 @@
 from uuid import uuid4
 from django.contrib.auth.models import User
 from django.db import models
-import random
+import random, _datetime
 
 # new
 # Adds UserProfile model to Pizza app instead
 # Easier to manage
+
+# CHANNELS FOR NOTIFICATION WHEN ORDER IS PLACED
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
+# DJANGO RQ FOR EMAIL WHEN ORDER IS PLACED
+import django_rq
+from . messaging import email_message, admin_order_email, user_order_email
 
 
 class UserProfile(models.Model):
@@ -64,7 +72,7 @@ class Order(models.Model):
         ('delivered', 'delivered'),
     )
 
-    order_id = models.IntegerField(null=False, default="0")
+    # order_id = models.IntegerField(null=False, default="0")
     order_date_time = models.DateTimeField(auto_now_add=True)
     delivery_date_time = models.DateTimeField(default='20:00')
     total_price = models.IntegerField(default=0)
@@ -75,7 +83,7 @@ class Order(models.Model):
     @classmethod
     def create(cls, delivery_date_time, pizza_id, pizza_name, pizza_price):
         order = cls()
-        order.order_id = random.randint(100000, 400000)
+        # order.order_id = random.randint(100000, 400000)
         # order.order_date_time = order_date_time
         order.delivery_date_time = delivery_date_time
         order.total_price = pizza_price
@@ -83,9 +91,45 @@ class Order(models.Model):
 
         order.pizzas = pizza_name
         order.save()
+
+        # Using non class methods - rather methods on the instance that was created:
+        order.create_order_notification()
+        order.send_order_confirmation_emails()
+        order.test_print()
+
         return order
+
+    def create_order_notification(self):
+        # current_user = request.user # Getting current user
+        # current_user = user = "Test"
+        channel_layer = get_channel_layer()
+        data = "Order #"+ str(self.pk) + " placed." # Pass any data based on your requirement
+        # Trigger message sent to group
+        async_to_sync(channel_layer.group_send)(
+            str("Order_Notification_Group"),  # Group Name, Should always be string
+            {
+                "type": "notify",   # Custom Function written in the consumers.py
+                "text": data,
+            },
+        )
+
+    def send_order_confirmation_emails(self):
+        django_rq.enqueue(admin_order_email, {
+               'order_id' : str(self.pk),
+               'email' : 'joshkap2015@gmail.com',
+            })
+        django_rq.enqueue(user_order_email, {
+               'order_id' : str(self.pk),
+               'email' : 'joshkap2015@gmail.com',
+            })
+
+    def test_print(self):
+        print("Testing the print method. Order id: #" + str(self.pk))
 
     def __str__(self):
         return f"Order #{self.order_id} - Pizzas: {self.pizzas}"
 
         # simple responsibility principles
+
+
+

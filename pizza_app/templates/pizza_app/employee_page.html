@@ -33,7 +33,7 @@
   <div class="white_line"></div>
   <br>
 
-
+  <div class="pizzas-wrapper">
   {% for pizza in pizzas %}
   <div class="pizza-block">
     <div class="pizza-content2">
@@ -41,7 +41,7 @@
         <h2 class="pizza-name">{{ pizza.name }}</h2>
         <p>{{ pizza.price }} kr.</p>
         <p class="pizza-text">{{ pizza.text }}</p>
-        <a class="edit-pizza-btn" href="{% url 'pizza_app:edit_pizza' pizza.pizza_id %}">Edit pizza</a>
+        <a class="edit-pizza-btn" href="{% url 'pizza_app:edit_pizza' pizza.pk %}">Edit pizza</a>
       </div>
 
       <div class="pizza-img">
@@ -51,13 +51,19 @@
       </div>
     </div>
   </div>
-  </div>
+
   {% endfor %}
-
+</div>
 </section>
-</body>
-
-</html>
+<style>
+  .pizzas-wrapper {
+    max-width:1000px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap:40px;
+}
+</style>
 
 {% else %}
 

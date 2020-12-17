@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     #Chat app
     'channels',
     'chat',
+    'notifications',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -85,10 +86,10 @@ RQ_QUEUES = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 #EMAIL_USE_SSL = True ### <--- DON'T USE THIS - USE EMAIL_USE_TLS
-EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'joshkap2015@gmail.com'
-EMAIL_HOST_PASSWORD = 'CYIJEhMxqRgkU9H3'
+EMAIL_HOST_USER = 'joshwebdev29@gmail.com'
+EMAIL_HOST_PASSWORD = 'Devboy#1'
 
 # Setting up permissions and authorization settings for REST API
 REST_FRAMEWORK = {
