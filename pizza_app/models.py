@@ -71,8 +71,9 @@ class Order(models.Model):
         ('delivering', 'delivering'),
         ('delivered', 'delivered'),
     )
-
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     # order_id = models.IntegerField(null=False, default="0")
+    order_id =  models.IntegerField(default=0)
     order_date_time = models.DateTimeField(auto_now_add=True)
     delivery_date_time = models.DateTimeField(default='20:00')
     total_price = models.IntegerField(default=0)
@@ -81,14 +82,14 @@ class Order(models.Model):
     pizzas = models.CharField(max_length=250, default="Pepperoni")
 
     @classmethod
-    def create(cls, delivery_date_time, pizza_id, pizza_name, pizza_price):
+    def create(cls, delivery_date_time, pizza_id, pizza_name, pizza_price, customer):
         order = cls()
         # order.order_id = random.randint(100000, 400000)
         # order.order_date_time = order_date_time
         order.delivery_date_time = delivery_date_time
         order.total_price = pizza_price
         #order.order_status = order_status
-
+        order.customer = customer
         order.pizzas = pizza_name
         order.save()
 

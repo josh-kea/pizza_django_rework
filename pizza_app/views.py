@@ -41,7 +41,7 @@ def customer_page(request):
         pizza_price = request.POST['pizza_price']
 
         order = Order.create(delivery_date_time,
-                            pizza_id, pizza_name, pizza_price)
+                            pizza_id, pizza_name, pizza_price, request.user)
         context = {
             'order': order
         }                 
