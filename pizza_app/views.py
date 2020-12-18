@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
-from .models import UserProfile, Pizza, Order
+from .models import UserProfile, Pizza, Order, Topping
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 import random
@@ -28,7 +28,10 @@ def customer_page(request):
         request.user), 'Employee routed to customer view.'
     pizzas = Pizza.objects.all()
     userProfiles = UserProfile.objects.filter(user=request.user)
+    toppings = Topping.objects.all()
+
     context = {
+        'toppings' : toppings,
         'pizzas': pizzas,
         'userProfiles': userProfiles,
     }
@@ -39,9 +42,10 @@ def customer_page(request):
         pizza_id = request.POST['pizza_id']
         pizza_name = request.POST['pizza_name']
         pizza_price = request.POST['pizza_price']
+        topping_id = request.POST['topping_id']
 
         order = Order.create(delivery_date_time,
-                            pizza_id, pizza_name, pizza_price, request.user)
+                            pizza_id, pizza_name, pizza_price, request.user, topping_id)
         context = {
             'order': order
         }                 

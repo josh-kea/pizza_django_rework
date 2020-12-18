@@ -64,6 +64,12 @@ class Pizza(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+class Topping(models.Model):
+     item = models.CharField(max_length=64, unique=True, blank=False)
+     price = models.IntegerField(default=0)
+
+     def __str__(self):
+        return f'{self.item}'
 
 class Order(models.Model):
     status = (
@@ -72,26 +78,23 @@ class Order(models.Model):
         ('delivered', 'delivered'),
     )
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
-    # order_id = models.IntegerField(null=False, default="0")
-    order_id =  models.IntegerField(default=0)
     order_date_time = models.DateTimeField(auto_now_add=True)
     delivery_date_time = models.DateTimeField(default='20:00')
     total_price = models.IntegerField(default=0)
     order_status = models.CharField(
         choices=status, default='pending', max_length=250)
     pizzas = models.CharField(max_length=250, default="Pepperoni")
+    toppings = models.ManyToManyField(Topping, blank=True)
 
     @classmethod
-    def create(cls, delivery_date_time, pizza_id, pizza_name, pizza_price, customer):
+    def create(cls, delivery_date_time, pizza_id, pizza_name, pizza_price, customer, topping):
         order = cls()
-        # order.order_id = random.randint(100000, 400000)
-        # order.order_date_time = order_date_time
         order.delivery_date_time = delivery_date_time
         order.total_price = pizza_price
-        #order.order_status = order_status
         order.customer = customer
         order.pizzas = pizza_name
         order.save()
+        order.toppings.add(topping)
 
         # Using non class methods - rather methods on the instance that was created:
         order.create_order_notification()
@@ -101,8 +104,6 @@ class Order(models.Model):
         return order
 
     def create_order_notification(self):
-        # current_user = request.user # Getting current user
-        # current_user = user = "Test"
         channel_layer = get_channel_layer()
         data = "Order #"+ str(self.pk) + " placed." # Pass any data based on your requirement
         # Trigger message sent to group
@@ -128,7 +129,7 @@ class Order(models.Model):
         print("Testing the print method. Order id: #" + str(self.pk))
 
     def __str__(self):
-        return f"Order #{self.order_id} - Pizzas: {self.pizzas}"
+        return f"Order #{self.pk} - Pizzas: {self.pizzas}"
 
         # simple responsibility principles
 
