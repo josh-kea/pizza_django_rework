@@ -3,10 +3,6 @@ from django.contrib.auth.models import User
 from django.db import models
 import random, _datetime
 
-# new
-# Adds UserProfile model to Pizza app instead
-# Easier to manage
-
 # CHANNELS FOR NOTIFICATION WHEN ORDER IS PLACED
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
@@ -14,7 +10,6 @@ from asgiref.sync import async_to_sync
 # DJANGO RQ FOR EMAIL WHEN ORDER IS PLACED
 import django_rq
 from . messaging import email_message, admin_order_email, user_order_email
-
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
@@ -130,8 +125,6 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.pk} - Pizzas: {self.pizzas}"
-
-        # simple responsibility principles
 
 
 

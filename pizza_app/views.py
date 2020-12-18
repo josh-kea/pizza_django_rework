@@ -8,7 +8,6 @@ import random
 from .utils import is_pizza_employee
 from django.urls import reverse
 from django.shortcuts import redirect
-# Create your views here.
 
 # EMAILS
 import django_rq
@@ -49,9 +48,7 @@ def customer_page(request):
         context = {
             'order': order
         }                 
-        # return HttpResponseRedirect(reverse('pizza_app:thank_you/'+ str(order.order_id)))
         return redirect('thank_you/'+ str(order.pk))
-        #return render(request, 'pizza_app/customer_page.html', context)
 
     return render(request, 'pizza_app/customer_page.html', context)
 
