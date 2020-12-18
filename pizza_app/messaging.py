@@ -1,6 +1,5 @@
 from django.core.mail import send_mail
 
-
 def email_message(message_dict):
    contents = f"""
    Hi, thank you for trying to reset your password.

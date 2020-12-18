@@ -1,7 +1,5 @@
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
-
-
 class IPFilterMiddleware:   
 
    def __init__(self, get_response):

@@ -50,7 +50,13 @@
             
             <label for="delivery_time" id="start">Delivery time (date and time): </label>
             <input type="datetime-local" name="delivery_time" min="2010-06-12T00:00" max="2021-06-12T00:00" required>
-
+            <label for="topping-choice">Select one additional topping</label>
+            <select name="topping_id" style="margin-bottom:10px;">
+              
+                {% for topping in toppings %}
+                    <option value="{{ topping.pk }}">{{ topping.item }} - {{ topping.price }} kr.</option>
+                {% endfor %}
+            </select>
             <button>Order</button>
         </form>
         {% endfor %}

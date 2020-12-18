@@ -18,7 +18,6 @@ urlpatterns = [
     path('thank_you/<int:pk>/', views.thank_you, name='thank_you'),
     path('api/v1/', PizzaList.as_view()),
     path('api/v1/<int:pk>/', PizzaDetail.as_view()),
-#    path('api/v1/rest-auth/', include('rest_auth.urls')),
     path('edit_customers/', views.edit_customers, name='edit_customers'),
 
 ]

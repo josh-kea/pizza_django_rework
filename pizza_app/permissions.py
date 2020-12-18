@@ -11,5 +11,5 @@ class IsEmployeeOrNoAccess(permissions.BasePermission):
         userprofile = UserProfile.objects.get(user=request.user)
 
         if userprofile.user_status is 'employee':
-            print(request.user.name + " has permission to view " + str(view))
+            print(str(request.user.username) + " has permission to view " + str(view))
             return true

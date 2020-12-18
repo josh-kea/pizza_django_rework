@@ -1,14 +1,13 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
-from .models import UserProfile, Pizza, Order
+from .models import UserProfile, Pizza, Order, Topping
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 import random
 from .utils import is_pizza_employee
 from django.urls import reverse
 from django.shortcuts import redirect
-# Create your views here.
 
 # EMAILS
 import django_rq
@@ -28,7 +27,10 @@ def customer_page(request):
         request.user), 'Employee routed to customer view.'
     pizzas = Pizza.objects.all()
     userProfiles = UserProfile.objects.filter(user=request.user)
+    toppings = Topping.objects.all()
+
     context = {
+        'toppings' : toppings,
         'pizzas': pizzas,
         'userProfiles': userProfiles,
     }
@@ -39,15 +41,14 @@ def customer_page(request):
         pizza_id = request.POST['pizza_id']
         pizza_name = request.POST['pizza_name']
         pizza_price = request.POST['pizza_price']
+        topping_id = request.POST['topping_id']
 
         order = Order.create(delivery_date_time,
-                            pizza_id, pizza_name, pizza_price, request.user)
+                            pizza_id, pizza_name, pizza_price, request.user, topping_id)
         context = {
             'order': order
         }                 
-        # return HttpResponseRedirect(reverse('pizza_app:thank_you/'+ str(order.order_id)))
         return redirect('thank_you/'+ str(order.pk))
-        #return render(request, 'pizza_app/customer_page.html', context)
 
     return render(request, 'pizza_app/customer_page.html', context)
 
